@@ -3,7 +3,7 @@ from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 import os
 
-def upload_sheet():
+def upload_sheet(param):
     # Check if the private.key file exists
     if not os.path.isfile("private.key"):
         raise FileNotFoundError("private.key file not found. Please ensure the file exists in the current directory.")
@@ -43,10 +43,11 @@ def upload_sheet():
 
     # Make the authenticated request
     headers = {"Authorization": f"Bearer {credentials.token}"}
-    response = requests.get(url, headers=headers)
+    # Example: Send the parameter as POST data
+    response = requests.post(url, headers=headers, data={'param': param})
 
     print("Status code:", response.status_code)
     print("Response:", response.text)
 
 if __name__ == "__main__":
-    upload_sheet()
+    upload_sheet("file contents")
